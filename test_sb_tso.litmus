@@ -1,0 +1,12 @@
+RISCV SB
+"Store Buffering - RISC-V TSO Test"
+{
+  0:x1=x; 0:x2=y;
+  1:x1=x; 1:x2=y;
+}
+P0          | P1          ;
+sd x0,0(x1) | sd x0,0(x2) ;
+fence.tso   | fence.tso   ;
+ld x3,0(x2) | ld x3,0(x1) ;
+exists
+(0:x3=0 /\ 1:x3=0)
